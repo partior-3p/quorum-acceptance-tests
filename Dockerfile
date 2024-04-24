@@ -1,10 +1,10 @@
 FROM alpine:edge
 
 ARG TERRAFORM_VERSION=0.14.7
-ARG GAUGE_VERSION=1.3.3
+ARG GAUGE_VERSION=1.6.6
 # To have a consistent run, this must be the same as gauge-java.version in pom.xml
 ARG GAUGE_JAVA_VERSION=0.7.15
-ARG JDK_VERSION=14
+ARG JDK_VERSION=17
 LABEL maintainer="info@goquorum.com" \
     TERRAFORM_VERSION="${TERRAFORM_VERSION}" \
     GAUGE_VERSION="${GAUGE_VERSION}" \
@@ -22,7 +22,7 @@ RUN apk -q --no-cache --update add tar bash \
         && unzip -q -o /tmp/downloads/terraform.zip -d bin) & \
         p="$!"; pids="$pids $p"; echo "  >> Installing Terraform ${TERRAFORM_VERSION} - PID $p"; \
         (wget -O /tmp/downloads/gauge.zip -q https://github.com/getgauge/gauge/releases/download/v${GAUGE_VERSION}/gauge-${GAUGE_VERSION}-linux.x86_64.zip \
-        && unzip -q -o /tmp/downloads/gauge.zip -d bin && gauge install java --version ${GAUGE_JAVA_VERSION} > /dev/null && gauge install > /dev/null) & \
+        && unzip -q -o /tmp/downloads/gauge.zip -d bin && gauge install java --version ${GAUGE_JAVA_VERSION} > /dev/null && gauge install > /dev/null && gauge install xml-report -v 0.5.1 > /dev/null) & \
         p="$!"; pids="$pids $p"; echo "  >> Installing Gauge ${GAUGE_VERSION} - PID $p"; \
         (apk -q --no-cache add openjdk${JDK_VERSION} --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing) & \
         p="$!"; pids="$pids $p"; echo "  >> Installing OpenJDK ${JDK_VERSION} - PID $p"; \
