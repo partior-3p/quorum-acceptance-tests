@@ -36,6 +36,12 @@ With built-in provisioning feature:
 
 ## Running Tests
 
+### Dependencies Check
+
+Helper scripts are included to ensure that local environment has the required dependencies
+
+    - `./scripts/dependencies.sh`
+
 ### With auto-provisioning network
 
 > :bulb: Tag `networks/typical::raft` means:
@@ -139,6 +145,12 @@ E.g.: To start `networks/typical` with remote Docker infrastructure:
 ## Logging
 
 - Set environment variable: `LOGGING_LEVEL_COM_QUORUM_GAUGE=DEBUG`
+
+### Cleanup
+
+Helper scripts are included to clean local environment pre/post-testing. Run this if there are errors during execution of tests locally due to conflicts with local resources.
+
+    - `./scripts/cleanup.sh`
 
 ------
 
